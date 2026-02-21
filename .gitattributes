@@ -1,0 +1,8 @@
+*.dll filter=lfs diff=lfs merge=lfs -text
+*.dylib
+git[[:space:]]lfs[[:space:]]track[[:space:]]*.dylib
+git[[:space:]]lfs[[:space:]]track[[:space:]]ArtifactDB
+git[[:space:]]lfs[[:space:]]track[[:space:]]dsymutil filter=lfs diff=lfs merge=lfs -text
+*.dylib filter=lfs diff=lfs merge=lfs -text
+ArtifactDB filter=lfs diff=lfs merge=lfs -text
+dsymutil filter=lfs diff=lfs merge=lfs -text
