@@ -18,7 +18,7 @@ public class TopDownPlayer : MonoBehaviour
     private void OnDisable()
     {
         moveInput.action.performed -= OnMove;
-        moveInput.action.canceled += OnMove;
+        moveInput.action.canceled -= OnMove;
     }
 
     void Start()
@@ -35,4 +35,11 @@ public class TopDownPlayer : MonoBehaviour
     {
         rb.MovePosition(rb.position + moveDirection * moveSpeed * Time.fixedDeltaTime);
     }
+
+#if UNITY_INCLUDE_TESTS
+    public void SetMoveDirection(Vector2 dir)
+    {
+        moveDirection = dir;
+    }
+#endif
 }
