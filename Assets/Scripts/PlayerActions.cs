@@ -13,10 +13,10 @@ public class PlayerActions : MonoBehaviour
                 roomGenerator.RoomCompleted();
                 break;
             case "Loot":
-                Destroy(collision.gameObject);
+                collision.GetComponent<Chest>().OpenChest();
                 break;
             case "Enemy":
-                Destroy(collision.gameObject);
+                collision.GetComponent<Enemy>().KillEnemy();
                 break;
             default:
                 break;
