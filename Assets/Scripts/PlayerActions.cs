@@ -10,13 +10,10 @@ public class PlayerActions : MonoBehaviour
         switch(collision.tag)
         {
             case "Exit":
-                roomGenerator.RoomCompleted();
+                roomGenerator.RoomCompleted(false);
                 break;
             case "Loot":
                 collision.GetComponent<Chest>().OpenChest();
-                break;
-            case "Enemy":
-                collision.GetComponent<Enemy>().KillEnemy();
                 break;
             default:
                 break;

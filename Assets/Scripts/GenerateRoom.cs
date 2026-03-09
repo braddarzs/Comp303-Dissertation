@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using Unity.AI.Navigation;
+using UnityEngine.AI;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
@@ -44,6 +46,11 @@ public class GenerateRoom : MonoBehaviour
     [SerializeField] private GameObject exitPrefab;
     [SerializeField] private Transform roomParent;
 
+    private float startRoomTime;
+
+    [SerializeField] GameObject player;
+
+    [SerializeField] NavMeshSurface navMeshSurface;
 
     public void StartGeneration()
     {
@@ -215,6 +222,18 @@ public class GenerateRoom : MonoBehaviour
     {
         print("Generating...");
 
+        print(dna);
+
+        RoomLogger.RoomLogEntry logEntry = RoomLogger.Instance.AddRoomEntry();
+        if(logEntry != null)
+        {
+            logEntry.roomLength = dna.roomLength;
+            logEntry.roomWidth = dna.roomWidth;
+            logEntry.roomArea = dna.roomWidth * dna.roomLength;
+            logEntry.lootCount = dna.lootCount;
+            logEntry.enemyCount = dna.enemyCount;
+        }
+
         foreach (GameObject preview in previews)
             Destroy(preview);
         previews.Clear();
@@ -271,9 +290,22 @@ public class GenerateRoom : MonoBehaviour
 
         Vector3 exitPos = borderPositions[Random.Range(0, borderPositions.Count)];
         Instantiate(exitPrefab, exitPos, Quaternion.identity,roomParent);
+
+        int usedTiles = dna.enemyCount + dna.lootCount;
+
+        if (usedTiles < floorPositions.Count)
+        {
+            Vector3 playerSpawn = floorPositions[usedTiles];
+            player.transform.position = playerSpawn;
+        }
+
+        navMeshSurface.RemoveData();
+        navMeshSurface.BuildNavMesh();
+        startRoomTime = Time.time;
+        continueButton.gameObject.SetActive(false);
     }
 
-    public void RoomCompleted()
+    public void RoomCompleted(bool died)
     {
         foreach(Transform child in roomParent)
         {
@@ -290,8 +322,14 @@ public class GenerateRoom : MonoBehaviour
         currentGeneration = 0;
 
         RunEvolution();
-    }
 
+        RoomLogger.Instance.logData.sessionLength += (Time.time - startRoomTime);
+        if(died)
+        {
+            RoomLogger.Instance.logData.deathCount += 1;
+        }
+        RoomLogger.Instance.currentRoomEntry = null;
+    }
     float EvaluateFitness(RoomDNA dna)
     {
         return dna.fitness;
