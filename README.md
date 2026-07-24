@@ -4,7 +4,7 @@ A Unity dissertation project exploring how **interactive genetic algorithms** ca
 
 [![Unity CI/CD](https://github.com/braddarzs/Comp303-Dissertation/actions/workflows/main.yml/badge.svg)](https://github.com/braddarzs/Comp303-Dissertation/actions/workflows/main.yml)
 
-[Watch the demo](ArtifactVideo.mp4) · [Read the development log](Devlog.md) · [View the CI/CD workflow](.github/workflows/main.yml)
+[Watch the demo](ArtifactVideo.mp4) · [Read the development log](Devlog.md)
 
 ## Overview
 
