@@ -1,51 +1,39 @@
-# COMP302 Dissertation
-**Project:** Procedural Generation / Genetic Algorithm Project  
-**Author:** Bradley Jeffs                        
+# Player-Guided Procedural Dungeon Generation
 
----
+A Unity dissertation project exploring how **interactive genetic algorithms** can give players direct control over procedurally generated game content.
+
+[![Unity CI/CD](https://github.com/braddarzs/Comp303-Dissertation/actions/workflows/main.yml/badge.svg)](https://github.com/braddarzs/Comp303-Dissertation/actions/workflows/main.yml)
+
+[Watch the demo](ArtifactVideo.mp4) · [Read the development log](Devlog.md) · [View the CI/CD workflow](.github/workflows/main.yml)
 
 ## Overview
-This project explores the use of an Interactive Genetic Algorithms (IGA) as a method of Procedural Content Generation (PCG) within a Unity-based environment.
-The video game artifact will be a dungeon-crawling-style game, where the player will move from room to room. Each room will have enemies that the player will have to defeat, as well as loot that the player can acquire, and each room will also be a different scale. On game start, the player will have a choice between random generation or player-driven generation, which will dictate how each room is generated. The player will then be presented with five different options, where the room data is generated randomly, such as the number of enemies and size of the room, and displayed as a preview of the room. The preview will display a User Interface (UI) image of the size of the room and UI text detailing the number of enemies and loot in the room
 
-[Download Demo Video](ArtifactVideo.mp4)
+The project generates playable dungeon rooms using a genetic algorithm. Players evaluate five candidate rooms, rating their preferred combinations of room size, enemies and loot. Those ratings become the fitness values used to evolve the next generation.
 
-[Development Log](Devlog.md)
----
+After three generations, the selected DNA is converted into a playable room containing enemies, loot and an exit. A random-generation mode is also included as a comparison against the player-guided approach.
 
-## Future Work
+## Engineering highlights
 
-The next phase of development for this project is divided into two sections: **infrastructure improvements** and **prototype expansion**.
+- Interactive genetic algorithm with player-defined fitness scores
+- Roulette-wheel selection
+- Crossover and mutation across room size, enemy count and loot count
+- Runtime Tilemap generation and NavMesh rebuilding
+- Top-down movement, combat, enemies and collectible loot
+- JSON data logging for room choices, deaths and session duration
+- Automated EditMode and PlayMode testing
 
-### **1. Continuous Integration Setup (2 Weeks)**  
-A continuous integration (CI) pipeline will be introduced. This will include:
+**Tech:** Unity · C# · Unity Test Framework · GitHub Actions · GameCI
 
-- Automated project builds for each commit or pull request  
-- Analysis for scripts  
-- Automated playmode or editmode tests
+## CI/CD with GitHub Actions
 
-Implementing CI will improve development stability.
+The repository includes a CI/CD pipeline that runs automated EditMode and PlayMode tests.
 
-### **2. Prototype Development (1 Month)**  
-The gameplay prototype will be expanded to a complete artifact. Planned extensions include:
+The project-specific tests verify player movement and confirm that a selected candidate produces a playable Tilemap room.
 
-- Improved visuals
-- Basic combat and loot systems to support gameplay evaluation  
-- More data collection 
-- More intuitive design
-- Further refinement of the IGA to improve player agency
+## Controls
 
-The objective of this phase is to produce a playable vertical slice.
-
-
----
-
-
-##  How to Download
-
-1. Navigate to the **Releases** page of this repository:  
-    https://github.falmouth.ac.uk/GA-Undergrad-Student-Work-25-26/Comp302-Dissertation/releases/tag/Proposal_Artifact  
-2. Download the latest folder (`.zip` file) from the most recent release tag  
-
-3. Extract, then open the folder in the Unity Hub.
-
+| Input | Action |
+| --- | --- |
+| `WASD` / Arrow keys | Move |
+| Left click | Attack |
+| Mouse | Navigate and rate room candidates |
